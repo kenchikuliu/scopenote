@@ -18,7 +18,7 @@ Baseline form → validated project → change dialog → change with rate snaps
 - JavaScript/JSX and [React](https://react.dev/) 19.2.0.
 - [Vite](https://vite.dev/guide/) static build/dev server; exact version in lockfile. Node 22.20.0 available.
 - Plain CSS, original SVG icons, localStorage, Blob downloads, native dialog and print.
-- Node built-in tests for financial/schema cases; existing [Playwright](https://playwright.dev/) with isolated Chromium for observed verification, not a shipped dependency.
+- Node built-in tests for financial/schema cases; [Playwright](https://playwright.dev/) 1.56.1 is a development-only dependency for isolated Chromium checks. It is excluded from the production bundle.
 
 No participant stack familiarity is assumed. Installation/build will verify versions.
 
@@ -60,7 +60,7 @@ Implements `prd.md > Look and Feel`: warm paper, deep green, ink/slate and restr
 
 Version 1: `{version:1, project:null|Project, changes:Change[], isExample:boolean}`. Project: `title`, `client`, `scope`, `currency` (USD/CNY), `budgetCents`, `hoursHundredths`, `rateCents`. Change: unique `id`, `title`, `deliverable`, `source`, `hoursHundredths`, `rateCents`, `status` (pending/accepted/declined), `decisionNote`, `createdAt`, `updatedAt`.
 
-React holds validated data; serialize accepted mutations and validate on reload/import. Locale stored separately. Fee = round(hoursHundredths × rateCents / 100). Bounds: 100 changes, 10,000h/item, 100,000 currency units/h, 100,000,000 baseline, 1MB backup. Integer products/sums stay safe. Text never interpreted as HTML. Existing rates do not follow baseline edits.
+React holds validated data; serialize accepted mutations and validate on reload/import. Locale stored separately. Fee = round(hoursHundredths × rateCents / 100). Bounds: 100 changes, 10,000h/item, 100,000 currency units/h, 100,000,000 baseline, 5MB backup. Integer products/sums stay safe. Text never interpreted as HTML. Existing rates do not follow baseline edits.
 
 ## File Structure
 
@@ -76,14 +76,15 @@ project/
 │   │   ├── ChangeList.jsx
 │   │   ├── BudgetPanel.jsx
 │   │   ├── ConfirmationDocument.jsx
-│   │   └── Icon.jsx             # original paths
+│   │   ├── Icon.jsx             # original paths
 │   │   └── Field.jsx            # shared accessible form labels/errors
 │   └── lib/
 │       ├── domain.js
 │       ├── export.js
 │       ├── storage.js
 │       └── i18n.js
-├── tests/domain.test.js
+├── tests/                      # domain and document checks
+├── scripts/verify-ui.mjs        # isolated browser journey
 ├── devpost/                    # plans/checklist/offline app map
 ├── public/favicon.svg
 ├── index.html

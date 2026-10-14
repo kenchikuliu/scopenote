@@ -21,7 +21,7 @@ Execution: autonomous prototype under “continue”; formal learn/fast choice a
 
   Observed verification: 7 domain tests and Vite production build passed. Isolated Chromium exercised empty/example, invalid baseline, real baseline/change creation (2.25h → $225), recorded acceptance ($3,000 approved / $1,300 pending), 390px layout without horizontal overflow, and English toggle; no browser page errors. Desktop/mobile screenshots inspected. No participant checkpoint is inferred from this.
 
-- [ ] **2. The project survives reload and produces a portable confirmation document**
+- [x] **2. The project survives reload and produces a portable confirmation document**
   Becomes usable: Local save, guarded JSON restore, matching Markdown/print and Chinese/English interface.
   Why now: Completes output and return journey after financial kernel works.
   PRD ref: `prd.md > Confirmation Document`, `prd.md > Local Save and Backup`, `prd.md > Synthetic Example`
@@ -30,6 +30,8 @@ Execution: autonomous prototype under “continue”; formal learn/fast choice a
   Verify (mechanical): Reload/restore/export, corrupt import preservation, accepted-edit reset, blocked/corrupt storage, mobile, English and print PDF inspection.
   Learner check: Reload; download document/backup; restore; try English.
   Commit: `Add local persistence and confirmation exports`
+
+  Observed verification: 10 domain/export tests, production build and independent `npm ci`/test/build pass. Reusable Chromium harness passes 8 integrated groups with zero page errors; screenshots and generated print PDF inspected. See `verification.md`. Participant checkpoint remains pending.
 
 ## Hands-on Checkpoints
 
@@ -53,3 +55,8 @@ Reflection: Not offered yet; personal answers belong in ignored profile.
 Activity mode: Reference route planned; interactive activity pending.
 
 ## Revisions
+
+- Restore size limit increased from 1MB to 5MB: the valid maximum of 100 long multilingual change records can exceed 1MB. A worst-case UTF-8 backup test confirms the new limit contains all supported records.
+- Playwright is an exact development dependency, with a reusable isolated-browser script; it is not part of the production bundle.
+- Browser testing found English navigation overflowing at 320px; compact navigation was corrected before final verification.
+- Native dialog focus could fall back to the skip link when its launch button disappeared. Saving returns focus to the main workspace.
