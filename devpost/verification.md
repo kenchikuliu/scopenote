@@ -10,6 +10,7 @@ Windows, Node 22.20.0, npm 10.9.3, React/React DOM 19.2.0, Vite 8.3.4, Playwrigh
 
 - `npm test`: 10 passing financial/schema/export cases. Distinct pending/accepted/declined totals, rounding to cents, per-change rate snapshots and accepted-edit reconfirmation are verified with concrete values. A maximum multilingual backup fits the supported 5MB limit.
 - `npm run build`: static production output succeeds; approximately 250.46KB JavaScript / 78.62KB gzip, 39.36KB CSS / 9.12KB gzip. No runtime API or remote asset dependency.
+- Production preview at `http://localhost:4173`: synthetic example totals, reload persistence and Chinese document download pass in a fresh isolated context, with zero browser errors.
 - Independent copy of source/manifest/lockfile to ignored `artifacts/clean-install`: `npm ci`, all 10 tests, and production build pass. Standard packages are pinned by the lockfile.
 - `npm run test:ui` with the installed isolated Chromium: 8 integrated check groups, zero page errors. Raw record in ignored `artifacts/ui-verification.json`.
 

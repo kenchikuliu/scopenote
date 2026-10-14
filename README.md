@@ -81,6 +81,8 @@ Alternatively set `PLAYWRIGHT_CHROMIUM_EXECUTABLE` to an installed test Chromium
 - `tests/`: consequential domain/export checks.
 - `devpost/`: real planning, build progress, skill provenance and offline app map.
 
+Open `devpost/app-map.html` directly for an offline reference route through one real action and pointers for future changes. It requires no script, build or remote service.
+
 Standard dependencies: React/React DOM 19.2.0, Vite 8.3.4. Original application source, styles, icons and example prose were authored in this fresh directory; no competing product code was copied. The official Devpost Learn pack is installed locally but excluded from application commits; see `devpost/skill-provenance.md`.
 
 ## Submission status

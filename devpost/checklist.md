@@ -46,13 +46,13 @@ Execution: autonomous prototype under “continue”; formal learn/fast choice a
 
 - [ ] Learning activity complete
 - [ ] Optional edit and transfer reflection addressed
-- [ ] `devpost/app-map.html` generated from finished code, checked, and shown
+- [x] `devpost/app-map.html` generated from finished code, checked, and shown
 
-Activity and evidence: Participant interaction pending. Agent verification will not be described as learner practice.
-Route and stops: To be derived from implemented code.
+Activity and evidence: Participant interaction pending. Agent checks cover source anchors, offline map with JavaScript disabled, native details interaction and desktop/mobile widths; screenshot inspected. Map link shown. This is a reference route, not completed learner practice.
+Route and stops: `ChangeDialog.jsx > submit` → `App.jsx > saveChange` / `applyChangeEdit` → `domain.js > calculateTotals`, with BudgetPanel/export consumers and guarded persistence explained. Source snapshot `2cdb8aa`.
 Edit outcome: Not offered yet.
 Reflection: Not offered yet; personal answers belong in ignored profile.
-Activity mode: Reference route planned; interactive activity pending.
+Activity mode: Offline reference map delivered; interactive activity pending. Optional app feedback was requested asynchronously; no response has yet been recorded.
 
 ## Revisions
 
