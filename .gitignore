@@ -1,0 +1,21 @@
+# Personal learning context remains outside commits by default.
+/devpost/learner-profile.md
+
+# Local credentials; the example must contain placeholder values only.
+.env
+.env.*
+!.env.example
+
+# Development artifacts; adjust for the chosen stack during 4-spec / 5-build.
+node_modules/
+dist/
+.venv/
+__pycache__/
+*.pyc
+
+# Local verification output and editor state.
+artifacts/
+*.log
+.DS_Store
+.vscode/
+.agents/
