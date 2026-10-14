@@ -9,7 +9,7 @@ Execution: autonomous prototype under “continue”; formal learn/fast choice a
 
 ## Slices
 
-- [ ] **1. An original agreement and additions produce distinct budget totals**
+- [x] **1. An original agreement and additions produce distinct budget totals**
   Becomes usable: Responsive workspace where baseline and source-backed requests produce pending/accepted/estimated figures.
   Why now: Proves the unique kernel early.
   PRD ref: `prd.md > Original Agreement`, `prd.md > Traceable Change Records`, `prd.md > Budget Summary`
@@ -18,6 +18,8 @@ Execution: autonomous prototype under “continue”; formal learn/fast choice a
   Verify (mechanical): Domain tests, build, browser-create baseline/change and record decisions; responsive visual check.
   Learner check: Load example; see pending $2,300 vs approved $2,000; record one decision.
   Commit: `Build traceable changes and budget workspace`
+
+  Observed verification: 7 domain tests and Vite production build passed. Isolated Chromium exercised empty/example, invalid baseline, real baseline/change creation (2.25h → $225), recorded acceptance ($3,000 approved / $1,300 pending), 390px layout without horizontal overflow, and English toggle; no browser page errors. Desktop/mobile screenshots inspected. No participant checkpoint is inferred from this.
 
 - [ ] **2. The project survives reload and produces a portable confirmation document**
   Becomes usable: Local save, guarded JSON restore, matching Markdown/print and Chinese/English interface.

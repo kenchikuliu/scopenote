@@ -77,6 +77,7 @@ project/
 │   │   ├── BudgetPanel.jsx
 │   │   ├── ConfirmationDocument.jsx
 │   │   └── Icon.jsx             # original paths
+│   │   └── Field.jsx            # shared accessible form labels/errors
 │   └── lib/
 │       ├── domain.js
 │       ├── export.js
