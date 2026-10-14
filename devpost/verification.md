@@ -39,7 +39,7 @@ English navigation overflowed at 320px; compact navigation now passes all five w
 
 ## Practical limits and remaining review
 
-Browser checks cover Chromium on this machine; native Safari/Firefox and real phone hardware have not been exercised. PDF save destinations and pagination may vary by browser/printer. There is one local project with no cross-device sync. Participant actual use, planning approval, final review/reflection, optional hosting, public repository, video and submission remain pending. `devpost/checklist.md` keeps those boxes unchecked.
+Browser checks cover Chromium on this machine; native Safari/Firefox and real phone hardware have not been exercised. PDF save destinations and pagination may vary by browser/printer. There is one local project with no cross-device sync. Participant actual use, planning approval, final review/reflection, optional hosting, public video and submission remain pending. `devpost/checklist.md` keeps learner review boxes unchecked. Public source is available at https://github.com/kenchikuliu/scopenote.
 
 ## Local release preparation
 
@@ -48,3 +48,7 @@ On October 14, 2026, the production build and all ten existing tests passed agai
 The MIT notices for the bundled React, React DOM and Scheduler runtime were checked against installed license files and recorded in `THIRD_PARTY_NOTICES.md`. They are also included beside the static website when packaged. Vite and Playwright are development-only dependencies.
 
 `scripts/record-demo.mjs` records actual English UI actions in a fresh test Chromium, using fictional example data. Assertions check the displayed budgets, invalid hours, accepted-quote reconfirmation, local reload, exported Markdown figures, JSON example marker and phone backup restore. It produces a silent raw recording, screenshots and a real English print PDF; the participant supplies their own final explanation. Recording is preparation, not participant review, publication or final submission.
+
+## Public Source Check
+
+On October 14, 2026 (UTC), the participant authorized publishing the inspected source and its history. The initial public push contained five commits and 34 tracked files at `7f7e5ac`; the release audit examined 60 historical blobs without finding the specified credential patterns or private learner-profile/environment paths. Anonymous GitHub API requests returned HTTP 200 for the repository, README, license, required planning documents, checklist and third-party notices. The remote main SHA matched the local commit; the public tree excluded the private learner profile and local artifacts. Repository and license links are recorded in `spec.md`. Source publication does not complete learner review, video publication or final submission.

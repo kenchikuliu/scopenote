@@ -9,6 +9,8 @@ Working name only. A new responsive website built for Devpost Build With AI: Bas
 Node.js >=22.12.0 and npm. No API keys or account required.
 
 ```sh
+git clone https://github.com/kenchikuliu/scopenote.git
+cd scopenote
 npm ci
 npm run dev
 ```
@@ -95,4 +97,6 @@ The recording is local raw footage for review. It contains no participant narrat
 
 ## Submission status
 
-Local prototype only. User planning review, actual user feedback, final learning review, public repository, video, participant-written final submission material and Devpost submission remain to be completed. The official submission deadline is October 26, 2026 at 17:00 EDT (October 27, 05:00 Asia/Shanghai).
+Public source: [kenchikuliu/scopenote](https://github.com/kenchikuliu/scopenote), including development history, planning documents and the [MIT license](https://github.com/kenchikuliu/scopenote/blob/main/LICENSE). The website runs locally; no hosted application or public video is available yet.
+
+User planning review, actual user feedback, final learning review, public video, participant-written final submission material and Devpost submission remain to be completed. The official submission deadline is October 26, 2026 at 17:00 EDT (October 27, 05:00 Asia/Shanghai).

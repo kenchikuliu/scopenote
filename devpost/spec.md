@@ -24,7 +24,9 @@ No participant stack familiarity is assumed. Installation/build will verify vers
 
 ## Where It Runs and How Someone Tries It
 
-Node >=22.12: `npm ci`, `npm run dev`, open `http://localhost:5173`. Production: `npm run build`, `npm run preview`, open `http://localhost:4173`. No credentials. `npm test` verifies domain logic. Required short video/public repository remain; deployment is optional and has not occurred.
+Public source: https://github.com/kenchikuliu/scopenote. License: https://github.com/kenchikuliu/scopenote/blob/main/LICENSE. Clone with `git clone https://github.com/kenchikuliu/scopenote.git` and enter `scopenote/`.
+
+Node >=22.12: `npm ci`, `npm run dev`, open `http://localhost:5173`. Production: `npm run build`, `npm run preview`, open `http://localhost:4173`. No credentials. `npm test` verifies domain logic. The required short public video remains; deployment is optional and has not occurred.
 
 ## Look and Feel
 
