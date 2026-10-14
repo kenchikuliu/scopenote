@@ -85,6 +85,14 @@ Open `devpost/app-map.html` directly for an offline reference route through one 
 
 Standard dependencies: React/React DOM 19.2.0, Vite 8.3.4. Original application source, styles, icons and example prose were authored in this fresh directory; no competing product code was copied. The official Devpost Learn pack is installed locally but excluded from application commits; see `devpost/skill-provenance.md`.
 
+Runtime license notices are preserved in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md), alongside the application's MIT [LICENSE](LICENSE).
+
+## Record a local UI demonstration
+
+With the production preview running, `npm run demo:record` opens an isolated test Chromium and records a silent English UI walkthrough in `artifacts/demo/`. Use the same Playwright browser setup or executable override described above. The script exercises fictional example requests, a manually recorded outside decision, invalid-input recovery, reconfirmation after changing a quote, reload, and document/backup downloads. It also produces desktop/mobile screenshots, an actual print PDF, and a timestamped scene log.
+
+The recording is local raw footage for review. It contains no participant narration, music or submission text, and is not automatically published. The participant supplies their own explanation and final video. Downloads and financial assertions verify that the output matches the UI; this does not replace participant hands-on review.
+
 ## Submission status
 
 Local prototype only. User planning review, actual user feedback, final learning review, public repository, video, participant-written final submission material and Devpost submission remain to be completed. The official submission deadline is October 26, 2026 at 17:00 EDT (October 27, 05:00 Asia/Shanghai).

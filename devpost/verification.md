@@ -40,3 +40,11 @@ English navigation overflowed at 320px; compact navigation now passes all five w
 ## Practical limits and remaining review
 
 Browser checks cover Chromium on this machine; native Safari/Firefox and real phone hardware have not been exercised. PDF save destinations and pagination may vary by browser/printer. There is one local project with no cross-device sync. Participant actual use, planning approval, final review/reflection, optional hosting, public repository, video and submission remain pending. `devpost/checklist.md` keeps those boxes unchecked.
+
+## Local release preparation
+
+On October 14, 2026, the production build and all ten existing tests passed again during release preparation. `npm audit --json` reported zero known dependency vulnerabilities. A pattern audit examined all four existing Git commits and 55 unique historical blobs, and the current intended publication files: no credential patterns or private learner-profile / environment-file paths were found. This is a bounded inspection, not a claim of exhaustive secret detection. No account authentication state is included.
+
+The MIT notices for the bundled React, React DOM and Scheduler runtime were checked against installed license files and recorded in `THIRD_PARTY_NOTICES.md`. They are also included beside the static website when packaged. Vite and Playwright are development-only dependencies.
+
+`scripts/record-demo.mjs` records actual English UI actions in a fresh test Chromium, using fictional example data. Assertions check the displayed budgets, invalid hours, accepted-quote reconfirmation, local reload, exported Markdown figures, JSON example marker and phone backup restore. It produces a silent raw recording, screenshots and a real English print PDF; the participant supplies their own final explanation. Recording is preparation, not participant review, publication or final submission.
