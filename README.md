@@ -26,6 +26,8 @@ npm run preview
 
 Open http://localhost:4173. The `dist/` folder can later be hosted as a static site. No public deployment has been performed.
 
+Public UI demo: https://youtu.be/BZBYqzdNMM0 — 97 seconds, English interface, no audio, synthetic data. Playback was verified in a fresh browser context without signing in on 2026-10-16. The video shows the prototype working; the participant's final review and Devpost submission remain pending.
+
 ## Try the core journey
 
 1. Start empty and create an original agreement, or explicitly load the synthetic example.

@@ -26,7 +26,7 @@ No participant stack familiarity is assumed. Installation/build will verify vers
 
 Public source: https://github.com/kenchikuliu/scopenote. License: https://github.com/kenchikuliu/scopenote/blob/main/LICENSE. Clone with `git clone https://github.com/kenchikuliu/scopenote.git` and enter `scopenote/`.
 
-Node >=22.12: `npm ci`, `npm run dev`, open `http://localhost:5173`. Production: `npm run build`, `npm run preview`, open `http://localhost:4173`. No credentials. `npm test` verifies domain logic. The required short public video remains; deployment is optional and has not occurred.
+Node >=22.12: `npm ci`, `npm run dev`, open `http://localhost:5173`. Production: `npm run build`, `npm run preview`, open `http://localhost:4173`. No credentials. `npm test` verifies domain logic. Public demo video: https://youtu.be/BZBYqzdNMM0 (97 seconds, English UI, silent, synthetic data). Anonymous playback was verified on 2026-10-16. Deployment is optional and has not occurred. Devpost submission and participant review remain pending.
 
 ## Look and Feel
 
