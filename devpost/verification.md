@@ -2,6 +2,18 @@
 
 Verified on October 14, 2026. These are agent-run mechanical checks, not participant trial or a claim that the project has been publicly shipped.
 
+## October 16 usability revision
+
+The participant requested continued website optimization. Agent reproduction found that clearing estimate hours showed a misleading $0 quote; saving a pending addition under an accepted-only filter left it hidden; and undo cleared the dirty flag while an unsaved agreement draft remained on screen. These behaviors are fixed. First-use guidance now names freelancers/small studios and illustrates a fictional $2,000 website with a separately quoted $1,000 blog request. Primary actions appear before that example. Cards expose a 44px-high decision action that opens the existing form at the select without changing any data until saved.
+
+- All 10 domain/export cases pass. The production build succeeds: 253.15KB JavaScript / 79.36KB gzip and 40.62KB CSS / 9.39KB gzip.
+- The isolated production-preview browser harness passes 10 integrated groups with zero page errors. New coverage checks empty, zero, negative, malformed, precision and out-of-range hours/rates; valid preview before text is complete; clearing filters/search and focusing the saved card; desktop/mobile decision focus; and cancel/discard branches of guarded undo. Cancel keeps both the draft and subsequent navigation protection. Editing no longer copies a display-only list index into saved records.
+- Chinese and English first-use screens pass horizontal-overflow checks at 320/390/768/1024/1440px. Existing record layouts, mobile form/rounding, reload, local storage failure/recovery, JSON rejection/restore, bilingual Markdown and real print-PDF checks still pass.
+- Desktop empty/example screens, English mobile first-use screen and mobile decision modal were visually inspected. Evidence is regenerated in ignored `artifacts/`, including `empty-1440-en.png`, `empty-390-en.png`, `example-desktop.png`, `mobile-decision.png` and `ui-verification.json`.
+- The English UI recording was regenerated locally against the revision, including the direct decision action. All scene assertions pass with zero page errors. The encoded silent H.264 video is 96.97 seconds at 1440×900/30fps, and sampled frames were visually inspected. This local file is separate from the previously uploaded private review video; no replacement upload or publication occurred.
+
+These are technical checks. Participant hands-on/final review remains unchecked, and this revision does not publish a video or submit the Devpost draft.
+
 ## Environment
 
 Windows, Node 22.20.0, npm 10.9.3, React/React DOM 19.2.0, Vite 8.3.4, Playwright 1.56.1, isolated test Chromium 153.0.8010.12. Existing user browser windows/profiles were not touched. No external app writes or messages were sent.

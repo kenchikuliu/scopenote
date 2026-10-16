@@ -71,7 +71,7 @@ try {
   scene("Original agreement: fixed quote and included deliverables");
   await hold(8);
   await page.getByRole("navigation").getByRole("button", { name: /^Change log/ }).click();
-  await button("Edit · Add a blog page").click();
+  await button("Record client decision · Add a blog page").click();
   await hold(3);
   await page.getByLabel("Record client decision", { exact: true }).selectOption("accepted");
   await page.getByLabel("Decision note (optional)", { exact: true }).fill("Synthetic example: outside email approval recorded by the project owner.");

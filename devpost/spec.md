@@ -36,7 +36,7 @@ Implements `prd.md > Look and Feel`: warm paper, deep green, ink/slate and restr
 
 ### Workspace Shell
 
-`src/App.jsx`: navigation, locale, notices, guarded replacement, filters, save status and dialogs. Implements `prd.md > Screens and Layout`, `prd.md > Local Save and Backup`.
+`src/App.jsx`: navigation, locale, notices, guarded replacement/undo, filters, save status and dialogs. Saving a change clears search/decision filters and focuses its visible card. Undo checks for unsaved agreement edits; cancellation retains the draft and protection, while confirmed discard returns to the change log. Implements `prd.md > Screens and Layout`, `prd.md > Local Save and Backup`.
 
 ### AgreementForm
 
@@ -44,7 +44,7 @@ Implements `prd.md > Look and Feel`: warm paper, deep green, ink/slate and restr
 
 ### ChangeDialog and ChangeList
 
-`src/components/ChangeDialog.jsx`, `ChangeList.jsx`: accessible estimate form, filters, request expansion, edit/delete and empty state. Implements `prd.md > Traceable Change Records`.
+`src/components/ChangeDialog.jsx`, `ChangeList.jsx`: accessible estimate form, filters, request expansion, edit/delete and empty state. A fictional fixed-price website example explains the first-use scenario. Each record has an explicit decision action that opens the existing dialog and focuses the decision select; no decision is changed until saved. Quote preview uses the same numeric validation as saving and shows a dash for incomplete, malformed or out-of-range hours/rates, even while unrelated text is unfinished. Implements `prd.md > Traceable Change Records`.
 
 ### BudgetPanel
 
@@ -106,6 +106,9 @@ No runtime APIs, keys, analytics, fonts or image requests. npm setup fetches pac
 - Storage blocked/full → keep session work, show warning, allow backup.
 - Edited accepted quote → reset pending and old evidence; notify.
 - Currency change with records → explain restriction; create a new project instead.
+- Invalid/incomplete hours or rate → no monetary preview until both numbers pass validation.
+- Saved record excluded by existing search/filter → clear both and focus the saved card.
+- Undo while an agreement draft is unsaved → guard discard before restoring the previous workspace.
 
 ## What Was Simplified and Why
 

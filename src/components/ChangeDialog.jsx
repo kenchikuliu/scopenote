@@ -5,7 +5,6 @@ import {
   changeFee,
   decimalInput,
   formatMoney,
-  parseHundredths,
   validateChangeForm,
 } from "../lib/domain.js";
 
@@ -14,6 +13,7 @@ export default function ChangeDialog({
   project,
   t,
   locale,
+  focusDecision = false,
   onClose,
   onSave,
   onDirty,
@@ -46,6 +46,11 @@ export default function ChangeDialog({
   const dirty = JSON.stringify(fields) !== JSON.stringify(initial);
   useEffect(() => {
     dialog.current.showModal();
+    if (focusDecision) {
+      const decision = dialog.current.querySelector("#change-status");
+      decision?.focus();
+      decision?.scrollIntoView({ block: "center" });
+    }
   }, []);
   useEffect(() => {
     onDirty(dirty);
@@ -70,10 +75,12 @@ export default function ChangeDialog({
     }
     onSave(result.values);
   }
-  const fee = changeFee({
-    hoursHundredths: parseHundredths(fields.hours) ?? 0,
-    rateCents: parseHundredths(fields.rate) ?? 0,
-  });
+  const preview = validateChangeForm(fields);
+  const quoteError = preview.errors.hours ?? preview.errors.rate;
+  const fee = quoteError ? null : changeFee(preview.values);
+  const quoteHint = !quoteError
+    ? "rateSnapshot"
+    : quoteError === "required" ? "quoteIncomplete" : "quoteInvalid";
   const amount = (key, label, unit) => (
     <Field
       id={`change-${key}`}
@@ -128,7 +135,7 @@ export default function ChangeDialog({
               onChange={update("title")}
               placeholder={t("titlePlaceholder")}
               maxLength={120}
-              autoFocus
+              autoFocus={!focusDecision}
             />
           </Field>
           <Field
@@ -167,7 +174,7 @@ export default function ChangeDialog({
           <div className="live-quote">
             <div>
               <span>{t("liveQuote")}</span>
-              <p>{t("rateSnapshot")}</p>
+              <p>{t(quoteHint)}</p>
             </div>
             <strong>
               {Number.isSafeInteger(fee)

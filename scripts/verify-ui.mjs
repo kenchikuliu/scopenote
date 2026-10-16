@@ -46,6 +46,20 @@ try {
     path: `${output}/empty-desktop.png`,
     fullPage: true,
   });
+  for (const locale of ["zh", "en"]) {
+    if (locale === "en") await button("Switch to English").click();
+    for (const width of [320, 390, 768, 1024, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      assert.equal(
+        await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+        true,
+        `empty-state overflow: ${locale} at ${width}`,
+      );
+      if (width === 390 || width === 1440)
+        await page.screenshot({ path: `${output}/empty-${width}-${locale}.png`, fullPage: true });
+    }
+  }
+  await button("切换为中文").click();
   await button("试用示例").click();
   await sum("pending-total", "$2,300");
   await sum("approved-total", "$2,000");
@@ -59,7 +73,8 @@ try {
     "Empty first visit and explicitly labeled synthetic example with separate pending/approved totals",
   );
 
-  await button("编辑 · 增加博客页面").click();
+  await button("记录客户决定 · 增加博客页面").click();
+  assert.equal(await page.locator("#change-status").evaluate((e) => e === document.activeElement), true);
   await page
     .getByLabel("记录客户决定", { exact: true })
     .selectOption("accepted");
@@ -72,6 +87,7 @@ try {
   await page.reload();
   await sum("approved-total", "$3,000");
   assert.equal((await current()).changes[0].decisionNote, "合成示例：邮件确认");
+  assert.equal(Object.hasOwn((await current()).changes[0], "index"), false);
   await button("编辑 · 增加博客页面").click();
   await page.getByLabel("追加工时", { exact: true }).fill("12");
   await button("保存变更").click();
@@ -110,11 +126,28 @@ try {
   await page.getByLabel("新增工作默认费率").fill("150");
   await button("保存约定").click();
   await sum("pending-total", "$2,300");
+  await page.getByRole("button", { name: "已确认 0", exact: true }).click();
+  await page.getByLabel("搜索变更").fill("不会匹配新记录的搜索");
   await button("新增变更").click();
   assert.equal(
     await page.getByLabel("每小时费率", { exact: true }).inputValue(),
     "150",
   );
+  const quote = page.locator(".live-quote > strong");
+  assert.equal(await quote.innerText(), "—");
+  await page.getByLabel("追加工时").fill("2.25");
+  assert.equal(await quote.innerText(), "$337.50");
+  for (const hours of ["", "0", "-1", "10000.01", "1.234", "abc"]) {
+    await page.getByLabel("追加工时").fill(hours);
+    assert.equal(await quote.innerText(), "—", `invalid hours preview: ${hours}`);
+  }
+  await page.getByLabel("追加工时").fill("2.25");
+  for (const rate of ["", "0", "-1", "100000.01", "1.234"]) {
+    await page.getByLabel("每小时费率", { exact: true }).fill(rate);
+    assert.equal(await quote.innerText(), "—", `invalid rate preview: ${rate}`);
+  }
+  await page.getByLabel("每小时费率", { exact: true }).fill("150");
+  assert.equal(await quote.innerText(), "$337.50");
   await page.getByLabel("变更标题").fill("测试追加页面");
   await page.getByLabel("交付内容", { exact: true }).fill("联系表单页面");
   await page
@@ -140,6 +173,12 @@ try {
   await button("保存变更").click();
   await sum("pending-total", "$2,637.50");
   await sum("estimated-total", "$4,637.50");
+  assert.equal(await page.getByLabel("搜索变更").inputValue(), "");
+  assert.equal(await page.getByRole("button", { name: "全部 4", exact: true }).getAttribute("aria-pressed"), "true");
+  const savedId = (await current()).changes[3].id;
+  await page.waitForFunction((id) => document.activeElement?.id === `record-${id}`, savedId);
+  assert.equal(await page.getByTestId(`change-${savedId}`).isVisible(), true);
+  checks.push("Empty, negative, zero, precision and out-of-range estimates show no quote; saving reveals and focuses the record despite prior filters/search");
   const backupRaw = await download("下载备份", "verified-backup.json");
   const backup = JSON.parse(backupRaw);
   assert.equal(backup.changes[0].rateCents, 10000);
@@ -235,8 +274,25 @@ try {
     .getByRole("button", { name: "Delete", exact: true })
     .click();
   await sum("pending-total", "$2,300");
+  await button("Original agreement").click();
+  const savedTitle = (await current()).project.title;
+  await page.getByLabel("Project name", { exact: true }).fill("Unsaved agreement draft");
   await button("Undo").click();
+  await page.getByRole("dialog").getByRole("heading", { name: "Unsaved changes", exact: true }).waitFor();
+  await button("Cancel").click();
+  assert.equal(await page.getByLabel("Project name", { exact: true }).inputValue(), "Unsaved agreement draft");
+  assert.equal((await current()).changes.length, 3);
+  await page.getByRole("navigation").getByRole("button", { name: /^Change log/ }).click();
+  await page.getByRole("dialog").getByRole("heading", { name: "Unsaved changes", exact: true }).waitFor();
+  await button("Cancel").click();
+  await button("Undo").click();
+  await button("Discard edits").click();
   await sum("pending-total", "$2,637.50");
+  assert.equal(await page.getByRole("dialog").count(), 0);
+  await button("Original agreement").click();
+  assert.equal(await page.getByLabel("Project name", { exact: true }).inputValue(), savedTitle);
+  await page.getByRole("navigation").getByRole("button", { name: /^Change log/ }).click();
+  checks.push("Undo preserves unsaved agreement drafts when cancelled, keeps navigation protection active, and restores data only after explicit discard");
   checks.push(
     "Exact backup restore; malformed, duplicate-ID and oversized import preservation; delete/undo",
   );
@@ -249,7 +305,7 @@ try {
       exact: true,
     })
     .click();
-  await page.getByLabel("Record client decision").selectOption("declined");
+  await page.getByLabel("Record client decision", { exact: true }).selectOption("declined");
   await button("Save change").click();
   await sum("pending-total", "$1,500");
   await sum("estimated-total", "$3,500");
@@ -272,6 +328,11 @@ try {
       });
   }
   await page.setViewportSize({ width: 390, height: 844 });
+  await button("Record client decision · Add a blog page").click();
+  assert.equal(await page.locator("#change-status").evaluate((e) => e === document.activeElement), true);
+  assert.equal(await page.locator("dialog").evaluate((e) => e.scrollWidth <= e.clientWidth), true);
+  await page.screenshot({ path: `${output}/mobile-decision.png` });
+  await button("Cancel").click();
   await button("Add change").click();
   await page.getByLabel("Change title").fill("Mobile request");
   await page.getByLabel("Deliverable", { exact: true }).fill("A mobile layout");

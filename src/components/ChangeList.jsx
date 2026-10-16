@@ -8,7 +8,7 @@ import {
 
 export function EmptyState({ project, t, onCreate, onExample, onAdd }) {
   return (
-    <div className="empty-state paper-card">
+    <div className={`empty-state paper-card ${project ? "" : "first-run"}`}>
       <div className="empty-illustration" aria-hidden="true">
         <div className="illustration-sheet">
           <span />
@@ -40,6 +40,23 @@ export function EmptyState({ project, t, onCreate, onExample, onAdd }) {
         )}
       </div>
       {!project && (
+        <div className="example-scenario">
+          <span className="scenario-label">{t("scenarioLabel")}</span>
+          <div>
+            <span>{t("scenarioBeforeLabel")}</span>
+            <p>{t("scenarioBefore")}</p>
+          </div>
+          <div>
+            <span>{t("scenarioRequestLabel")}</span>
+            <p>{t("scenarioRequest")}</p>
+          </div>
+          <div className="scenario-quote">
+            <span>{t("scenarioQuoteLabel")}</span>
+            <p>{t("scenarioQuote")}</p>
+          </div>
+        </div>
+      )}
+      {!project && (
         <div className="mini-journey">
           {[
             ["note", "stepRequest"],
@@ -67,6 +84,7 @@ export default function ChangeList({
   search,
   setSearch,
   onEdit,
+  onDecision,
   onDelete,
   onAdd,
   onCreate,
@@ -136,8 +154,10 @@ export default function ChangeList({
         filtered.map((change) => (
           <article
             key={change.id}
+            id={`record-${change.id}`}
             className={`change-card ${change.status}`}
             data-testid={`change-${change.id}`}
+            tabIndex={-1}
           >
             <div className="change-card-top">
               <span className="change-code">
@@ -181,6 +201,16 @@ export default function ChangeList({
                   +{money(changeFee(change))}
                 </strong>
               </div>
+            </div>
+            <div className="change-next-action">
+              <button
+                onClick={() => onDecision(change)}
+                aria-label={`${t(change.status === "pending" ? "recordDecision" : "updateDecision")} · ${change.title}`}
+              >
+                <Icon name="check" size={15} />
+                {t(change.status === "pending" ? "recordDecision" : "updateDecision")}
+                <Icon name="arrow" size={15} />
+              </button>
             </div>
             <details className="request-details">
               <summary>

@@ -84,6 +84,7 @@ export default function App() {
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
   const [editing, setEditing] = useState(undefined);
+  const [focusDecision, setFocusDecision] = useState(false);
   const [confirm, setConfirm] = useState(null);
   const [toast, setToast] = useState(null);
   const [dirty, setDirty] = useState(false);
@@ -180,7 +181,16 @@ export default function App() {
       setToast({ key: "changeLimit" });
       return;
     }
-    guard(() => setEditing(null));
+    guard(() => {
+      setFocusDecision(false);
+      setEditing(null);
+    });
+  }
+  function editChange(change, decision = false) {
+    guard(() => {
+      setFocusDecision(decision);
+      setEditing(data.changes.find((item) => item.id === change.id));
+    });
   }
   function saveProject(project) {
     const action = () => {
@@ -203,6 +213,7 @@ export default function App() {
   function saveChange(values) {
     let key = "successChange";
     let changes;
+    const savedId = editing?.id ?? crypto.randomUUID();
     if (editing) {
       const result = applyChangeEdit(editing, values);
       changes = data.changes.map((c) =>
@@ -213,16 +224,32 @@ export default function App() {
       const now = new Date().toISOString();
       changes = [
         ...data.changes,
-        { ...values, id: crypto.randomUUID(), createdAt: now, updatedAt: now },
+        { ...values, id: savedId, createdAt: now, updatedAt: now },
       ];
     }
     setData({ ...data, changes });
     setEditing(undefined);
+    setFilter("all");
+    setSearch("");
     setDirty(false);
     setToast({ key });
-    requestAnimationFrame(() =>
-      document.getElementById("main-content")?.focus(),
-    );
+    requestAnimationFrame(() => {
+      const saved = document.getElementById(`record-${savedId}`);
+      saved?.focus({ preventScroll: true });
+      saved?.scrollIntoView({ block: "nearest" });
+    });
+  }
+  function undoLastAction() {
+    const previous = toast.undo;
+    guard(() => {
+      setEditing(undefined);
+      setData(previous);
+      setFilter("all");
+      setSearch("");
+      setDirty(false);
+      setTab("changes");
+      setToast({ key: "undone" });
+    });
   }
   function deleteChange(change) {
     setConfirm({
@@ -518,7 +545,8 @@ export default function App() {
                   setFilter={setFilter}
                   search={search}
                   setSearch={setSearch}
-                  onEdit={setEditing}
+                  onEdit={editChange}
+                  onDecision={(change) => editChange(change, true)}
                   onDelete={deleteChange}
                   onAdd={addChange}
                   onCreate={() => navigate("agreement")}
@@ -593,6 +621,7 @@ export default function App() {
           project={data.project}
           t={t}
           locale={locale}
+          focusDecision={focusDecision}
           onSave={saveChange}
           onDirty={onDirty}
           onClose={() => {
@@ -624,13 +653,7 @@ export default function App() {
           <Icon name={toast.error ? "info" : "check"} size={18} />
           <span>{t(toast.key)}</span>
           {toast.undo && (
-            <button
-              onClick={() => {
-                setData(toast.undo);
-                setDirty(false);
-                setToast({ key: "undone" });
-              }}
-            >
+            <button onClick={undoLastAction}>
               <Icon name="undo" size={15} />
               {t("undo")}
             </button>
